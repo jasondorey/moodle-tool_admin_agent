@@ -1,5 +1,11 @@
 This file describes API changes in tool_adminagent.
 
-=== 1.0 ===
-* Initial Moodle 5.2+ release.
-* Chat widget is a React/ESM mount (`@moodle/lms/tool_adminagent/ChatApp`). Config admin pages remain Mustache + AMD.
+=== 1.0.0-alpha (2026090302) ===
+* Alpha release for Moodle 5.2+.
+* Chat widget: React/ESM mount (`js/esm/src/ChatApp.tsx`); admin config remains Mustache + AMD.
+* Agent loop with dynamic function discovery, approval, auto-approve, conversation persistence.
+* Knowledgebase table (`tool_adminagent_kb`) and `search_knowledgebase` tool (manual import via CLI/fixture).
+* See CHANGELOG.md and HANDOFF.md for full alpha scope and known limitations.
+
+=== 1.0 (initial) ===
+* Plugin development baseline before public alpha tagging.
