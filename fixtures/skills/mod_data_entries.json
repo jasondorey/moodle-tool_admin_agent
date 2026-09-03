@@ -1,0 +1,19 @@
+{
+    "formatversion": 2026090200,
+    "shortname": "mod_data_entries",
+    "name": "Database entries",
+    "description": "Adding, editing and finding entries in a Database activity, including uploading files and images into entry fields and writing rich text with embedded images.",
+    "instructions": "Find the database and its fields first: mod_data_get_databases_by_courses lists the databases of a course, mod_data_get_fields each field's id, type, name and required flag. An entry is written as contents items, one per field: value carries the plain value, subvalues the named parts. The entry reads return the very same shapes, so values can be read, edited and sent back as they are.\n\nValue shapes per field type, read and write:\n- text, menu, radiobutton, number, email, regex: value is a single string, for example \"Green\". A regex value must match the field's pattern or the write is rejected with the field's own message.\n- checkbox, multimenu: value is an array of the chosen options, for example [\"X\", \"Z\"].\n- date: subvalues {\"day\": 14, \"month\": 3, \"year\": 2026}.\n- url: subvalues {\"0\": \"https://example.com\", \"1\": \"link text\"}; the second part is optional display text.\n- latlong: subvalues {\"0\": latitude, \"1\": longitude}, decimal degrees; send both halves or neither.\n- textarea: value is the HTML text and subvalues {\"content1\": 1} states its format (1 = HTML). To embed images or files, create a draft area with create_draft_file_area, upload into it, reference each file in the HTML as @@PLUGINFILE@@/filename.ext and pass the draft id as subvalues {\"itemid\": <id>}.\n- file: writing takes subvalues {\"file\": <draft item id>} with exactly one uploaded file in the draft area (create_draft_file_area again). Reading shows the stored filename as value; to replace the file send a new draft id, to keep it leave the field out.\n- picture: like file, plus subvalues {\"alttext\": \"...\"} describing the image. Only image files are accepted.\n\nUpdates are patches: send only the fields to change; every omitted field keeps its stored value, files included, and required fields do not have to be re-sent.\n\nA field marked unmapped: true in a read is a type this site added without a documented shape: its raw storage columns (content, content1, ...) are shown as stored, and subfields, when present, lists the keys a write takes under subvalues (an empty string in that list means the bare value). Never guess which storage column feeds which subfield; when unsure, leave the field out and it stays unchanged.\n\nA write is rejected as a whole when any sent field fails (a required field left empty, a regex mismatch, an invalid email address, half a coordinate pair); the error names the fields, so fix them and resend.",
+    "mainfunctions": [
+        "mod_data_add_entry",
+        "mod_data_update_entry"
+    ],
+    "otherfunctions": [
+        "mod_data_get_entry",
+        "mod_data_get_entries",
+        "mod_data_search_entries",
+        "mod_data_get_fields",
+        "create_draft_file_area"
+    ],
+    "enabled": true
+}

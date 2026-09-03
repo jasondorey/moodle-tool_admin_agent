@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="admin/tool/adminagent/db" VERSION="20260902" COMMENT="XMLDB file for Moodle admin/tool/adminagent"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="tool_adminagent_skill" COMMENT="Reusable instruction packs for the admin agent">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="shortname" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="description" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="instructions" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="mainfunctions" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="otherfunctions" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="enabled" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="1" SEQUENCE="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="shortnameuk" TYPE="unique" FIELDS="shortname"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="tool_adminagent_placement" COMMENT="Where the agent button appears">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="urlmasks" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="location" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT="floating" SEQUENCE="false"/>
+        <FIELD NAME="skillids" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="welcome" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="enabled" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="1" SEQUENCE="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="tool_adminagent_function" COMMENT="Catalog of functions the agent may call">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="functionname" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="bundled" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="type" TYPE="char" LENGTH="50" NOTNULL="true" DEFAULT="Read" SEQUENCE="false"/>
+        <FIELD NAME="enabled" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="relevance" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="description" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="capabilities" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="tags" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="functionnameuk" TYPE="unique" FIELDS="functionname"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="enabledix" UNIQUE="false" FIELDS="enabled"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="tool_adminagent_conversation" COMMENT="Agent chat sessions">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="placementid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="title" TYPE="char" LENGTH="255" NOTNULL="true" DEFAULT="" SEQUENCE="false"/>
+        <FIELD NAME="layout" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT="overlay" SEQUENCE="false"/>
+        <FIELD NAME="autoapprove" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT="none" SEQUENCE="false"/>
+        <FIELD NAME="providermeta" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="useridfk" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="usermodifiedix" UNIQUE="false" FIELDS="userid, timemodified"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="tool_adminagent_message" COMMENT="Messages in an agent conversation">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="conversationid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="role" TYPE="char" LENGTH="20" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="content" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="inputtokens" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="outputtokens" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="feedback" TYPE="char" LENGTH="10" NOTNULL="true" DEFAULT="" SEQUENCE="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="conversationfk" TYPE="foreign" FIELDS="conversationid" REFTABLE="tool_adminagent_conversation" REFFIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="tool_adminagent_toolcall" COMMENT="Function calls within a conversation">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="conversationid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="messageid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="callid" TYPE="char" LENGTH="100" NOTNULL="true" DEFAULT="" SEQUENCE="false"/>
+        <FIELD NAME="functionname" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="arguments" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="result" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="status" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT="pending" SEQUENCE="false"/>
+        <FIELD NAME="readwrite" TYPE="char" LENGTH="1" NOTNULL="true" DEFAULT="R" SEQUENCE="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="conversationfk" TYPE="foreign" FIELDS="conversationid" REFTABLE="tool_adminagent_conversation" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="statusix" UNIQUE="false" FIELDS="conversationid, status"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="tool_adminagent_kb" COMMENT="Knowledgebase articles for RAG retrieval">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="source" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" COMMENT="Origin identifier, e.g. docs.moodle.org"/>
+        <FIELD NAME="url" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Original URL of the article"/>
+        <FIELD NAME="title" TYPE="char" LENGTH="200" NOTNULL="true" DEFAULT="" SEQUENCE="false"/>
+        <FIELD NAME="chunk" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Chunk index within the article"/>
+        <FIELD NAME="content" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="tokens" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Estimated token count"/>
+        <FIELD NAME="tags" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="JSON array of tags for filtering"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="sourcetitlechunkix" UNIQUE="true" FIELDS="source, title, chunk"/>
+        <INDEX NAME="titleix" UNIQUE="false" FIELDS="title"/>
+      </INDEXES>
+    </TABLE>
+  </TABLES>
+</XMLDB>

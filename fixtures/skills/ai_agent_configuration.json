@@ -1,0 +1,23 @@
+{
+    "formatversion": 2026090200,
+    "shortname": "ai_agent_configuration",
+    "name": "AI agent configuration",
+    "description": "Configuring this AI agent: authoring its skills (reusable bundles of instructions and scoped tools loaded on demand) and its button placements (where the agent button appears and which skills it preloads).",
+    "instructions": "Help the user configure skills and button placements for the AI agent. When a skill is loaded, its instructions are appended to the system instructions sent to the LLM, which helps prevent common mistakes or assists with specific tasks.\n\nWhen asked to create a skill, your task is to write instructions for an LLM (like yourself). You must also identify suitable functions and include them in the skill definition. Use `tool_adminagent_list_functions` to find functions; **do NOT** use `search_tools` for this purpose, as `search_tools` makes tools available for immediate use, not for skill authoring. Include only necessary functions, but remember that more plugins can be added later. For example, if you are targeting functions for creating modules, use `mod_*_create_module*`, `x_mod_*_create_module*`, anticipating that modules installed in the future will follow similar naming patterns. The same approach applies to other plugin types.\n\n- After creating or editing a skill, read the capabilities, functions, and warnings returned by the tool and act on them. Confirm that the capabilities fit the skill's intended audience. A skill meant for teachers should require teacher-level capabilities, not be open to everyone or demand site administration.\n\n- Never invent identifiers, function names, or option values. Take them from the function list, or leave them to the function descriptions.\n\nWhen creating button placements, append `*` to the URL mask (unless you need to be very strict) so that it matches even when there are other query parameters in the URL.",
+    "mainfunctions": [
+        "tool_adminagent_create_skill",
+        "tool_adminagent_update_skill",
+        "tool_adminagent_create_placement",
+        "tool_adminagent_update_placement"
+    ],
+    "otherfunctions": [
+        "tool_adminagent_skill_pre_update",
+        "tool_adminagent_delete_skill",
+        "tool_adminagent_search_skills",
+        "tool_adminagent_list_functions",
+        "tool_adminagent_placement_pre_update",
+        "tool_adminagent_delete_placement",
+        "tool_adminagent_search_placements"
+    ],
+    "enabled": true
+}

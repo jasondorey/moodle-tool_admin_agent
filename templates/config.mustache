@@ -1,0 +1,165 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    @template tool_adminagent/config
+    @copyright 2026 Jason Dorey
+    @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+}}
+<div class="tool-adminagent-config">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link {{#tabskills}}active{{/tabskills}}" href="{{configurl}}?tab=skills">{{#str}} tabskills, tool_adminagent {{/str}}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{#tabplacements}}active{{/tabplacements}}" href="{{configurl}}?tab=placements">{{#str}} tabplacements, tool_adminagent {{/str}}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{#tabfunctions}}active{{/tabfunctions}}" href="{{configurl}}?tab=functions">{{#str}} tabfunctions, tool_adminagent {{/str}}</a>
+            </li>
+        </ul>
+        <a class="btn btn-secondary" href="{{settingsurl}}">
+            {{#pix}} i/settings, core {{/pix}} {{#str}} settingsgear, tool_adminagent {{/str}}
+        </a>
+    </div>
+
+    {{#tabskills}}
+    <div class="alert alert-info">{{#str}} skillsinfo, tool_adminagent {{/str}}</div>
+    <div class="tool-adminagent-import border border-dashed rounded p-3 mb-3" data-region="import-skills">
+        <strong>{{#str}} importskills, tool_adminagent {{/str}}</strong>
+        <p class="text-muted mb-2">{{#str}} importskills_help, tool_adminagent {{/str}}</p>
+        <input type="file" multiple accept=".json" class="d-none" data-action="skill-files">
+        <button type="button" class="btn btn-outline-secondary" data-action="choose-files">{{#str}} choosefiles, tool_adminagent {{/str}}</button>
+    </div>
+    <div class="text-end mb-2">
+        <button type="button" class="btn btn-primary" data-action="add-skill">{{#str}} addskill, tool_adminagent {{/str}}</button>
+    </div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>{{#str}} skillname, tool_adminagent {{/str}}</th>
+                <th>{{#str}} skillshortname, tool_adminagent {{/str}}</th>
+                <th>{{#str}} skilldescription, tool_adminagent {{/str}}</th>
+                <th>{{#str}} enabled, tool_adminagent {{/str}}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#skills}}
+            <tr data-id="{{id}}">
+                <td>{{name}}</td>
+                <td><code>{{shortname}}</code></td>
+                <td>{{description}}</td>
+                <td>
+                    <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" data-action="toggle-skill" data-id="{{id}}" id="skill-{{id}}" {{#enabled}}checked{{/enabled}}>
+                        <label class="form-check-label" for="skill-{{id}}"></label>
+                    </div>
+                </td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-link" data-bs-toggle="dropdown">⋮</button>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <a class="dropdown-item" href="#" data-action="edit-skill" data-id="{{id}}"
+                               data-shortname="{{shortname}}" data-name="{{name}}" data-description="{{description}}"
+                               data-instructions="{{instructions}}" data-mainfunctions="{{mainfunctions}}"
+                               data-otherfunctions="{{otherfunctions}}" data-enabled="{{enabled}}">{{#str}} editskill, tool_adminagent {{/str}}</a>
+                            <a class="dropdown-item text-danger" href="#" data-action="delete-skill" data-id="{{id}}">{{#str}} deleteskill, tool_adminagent {{/str}}</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {{/skills}}
+        </tbody>
+    </table>
+    {{/tabskills}}
+
+    {{#tabplacements}}
+    <div class="alert alert-info">{{#str}} placementsinfo, tool_adminagent {{/str}}</div>
+    <div class="text-end mb-2">
+        <button type="button" class="btn btn-primary" data-action="add-placement">{{#str}} addplacement, tool_adminagent {{/str}}</button>
+    </div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>{{#str}} placementname, tool_adminagent {{/str}}</th>
+                <th>{{#str}} urlmasks, tool_adminagent {{/str}}</th>
+                <th>{{#str}} buttonlocation, tool_adminagent {{/str}}</th>
+                <th>{{#str}} initialskills, tool_adminagent {{/str}}</th>
+                <th>{{#str}} enabled, tool_adminagent {{/str}}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#placements}}
+            <tr data-id="{{id}}">
+                <td>{{name}}</td>
+                <td><code>{{urlmasks}}</code></td>
+                <td>{{#floating}}{{#pix}} t/message, core {{/pix}} {{/floating}}{{locationlabel}}</td>
+                <td>{{initialskills}}</td>
+                <td>
+                    <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" data-action="toggle-placement" data-id="{{id}}" id="place-{{id}}" {{#enabled}}checked{{/enabled}}>
+                        <label class="form-check-label" for="place-{{id}}"></label>
+                    </div>
+                </td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-link" data-bs-toggle="dropdown">⋮</button>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <a class="dropdown-item" href="#" data-action="edit-placement" data-id="{{id}}"
+                               data-name="{{name}}" data-urlmasks="{{urlmasks}}" data-location="{{location}}"
+                               data-skillids="{{skillids}}" data-welcome="{{welcome}}" data-enabled="{{enabled}}">{{#str}} editplacement, tool_adminagent {{/str}}</a>
+                            <a class="dropdown-item text-danger" href="#" data-action="delete-placement" data-id="{{id}}">{{#str}} deleteplacement, tool_adminagent {{/str}}</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {{/placements}}
+        </tbody>
+    </table>
+    {{/tabplacements}}
+
+    {{#tabfunctions}}
+    <div class="alert alert-info">{{#str}} functionsinfo, tool_adminagent {{/str}}</div>
+    <div class="mb-2 text-end">
+        <input type="search" class="form-control d-inline-block w-auto" data-action="filter-functions" placeholder="{{#str}} search, tool_adminagent {{/str}}">
+    </div>
+    <table class="table table-hover" data-region="functions-table">
+        <thead>
+            <tr>
+                <th>{{#str}} functionname, tool_adminagent {{/str}}</th>
+                <th>{{#str}} functiontype, tool_adminagent {{/str}}</th>
+                <th>{{#str}} enabled, tool_adminagent {{/str}}</th>
+                <th>{{#str}} relevancescore, tool_adminagent {{/str}}</th>
+                <th>{{#str}} skilldescription, tool_adminagent {{/str}}</th>
+                <th>{{#str}} capabilities, tool_adminagent {{/str}}</th>
+                <th>{{#str}} tags, tool_adminagent {{/str}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#functions}}
+            <tr>
+                <td><code>{{functionname}}</code></td>
+                <td>
+                    {{#badges}}
+                    <span class="badge tool-adminagent-badge-{{class}}">{{label}}</span>
+                    {{/badges}}
+                </td>
+                <td>
+                    <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" data-action="toggle-function" data-id="{{id}}" id="fn-{{id}}" {{#enabled}}checked{{/enabled}}>
+                        <label class="form-check-label" for="fn-{{id}}"></label>
+                    </div>
+                </td>
+                <td><span class="tool-adminagent-relevance">{{relevance}}</span></td>
+                <td>{{description}}</td>
+                <td><small>{{capabilities}}</small></td>
+                <td><small>{{tagslist}}</small></td>
+            </tr>
+            {{/functions}}
+        </tbody>
+    </table>
+    {{/tabfunctions}}
+    <script type="application/json" data-region="skill-options">{{{skilloptionsjson}}}</script>
+</div>

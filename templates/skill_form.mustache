@@ -1,0 +1,36 @@
+{{!
+    @template tool_adminagent/skill_form
+    @copyright 2026 Jason Dorey
+    @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+}}
+<input type="hidden" name="id" value="{{id}}">
+<div class="alert alert-warning">{{{hint}}}</div>
+<div class="mb-2">
+    <label class="form-label" for="skill-shortname">{{#str}} skillshortname, tool_adminagent {{/str}}</label>
+    <input class="form-control" id="skill-shortname" name="shortname" value="{{shortname}}">
+</div>
+<div class="mb-2">
+    <label class="form-label" for="skill-name">{{#str}} skillname, tool_adminagent {{/str}}</label>
+    <input class="form-control" id="skill-name" name="name" value="{{name}}">
+</div>
+<div class="mb-2">
+    <label class="form-label" for="skill-description">{{#str}} skilldescription, tool_adminagent {{/str}}</label>
+    <textarea class="form-control" id="skill-description" name="description">{{description}}</textarea>
+</div>
+<div class="mb-2">
+    <label class="form-label" for="skill-instructions">{{#str}} skillinstructions, tool_adminagent {{/str}}</label>
+    <textarea class="form-control" id="skill-instructions" rows="6" name="instructions">{{instructions}}</textarea>
+</div>
+<div class="mb-2">
+    <label class="form-label" for="skill-mainfunctions">{{#str}} skillmainfunctions, tool_adminagent {{/str}}</label>
+    <textarea class="form-control" id="skill-mainfunctions" name="mainfunctions">{{mainfunctions}}</textarea>
+</div>
+<div class="mb-2">
+    <label class="form-label" for="skill-otherfunctions">{{#str}} skillotherfunctions, tool_adminagent {{/str}}</label>
+    <textarea class="form-control" id="skill-otherfunctions" name="otherfunctions">{{otherfunctions}}</textarea>
+</div>
+<div class="form-check form-switch">
+    <input type="checkbox" class="form-check-input" name="enabled" {{#enabledchecked}}checked{{/enabledchecked}}>
+    <label class="form-check-label">{{#str}} enabled, tool_adminagent {{/str}}</label>
+</div>
+<pre class="d-none mt-3 bg-light p-2" data-region="preview"></pre>

@@ -1,0 +1,15 @@
+{
+    "formatversion": 2026090200,
+    "shortname": "course_backups",
+    "name": "Course backups",
+    "description": "Finding the backups that exist for a Moodle course and inspecting what is inside one: the activities, sections, participants, grades and files it contains.",
+    "instructions": "A backup file (.mbz) is a zip archive, so never call read_file on the backup itself: it will fail. To answer a question about what a backup holds, use extract_files to pull out only the file that carries the answer, then call read_file on the file_url extract_files returns for it. Extracting the whole archive is slow and almost never needed.\n\nextract_files needs the backup's downloadurl. That field is null when you do not have permission to download the backup, and nothing inside it can be inspected in that case.\n\nWhere to look inside a backup:\n- Which activities and sections it holds, and the settings it was taken with: moodle_backup.xml. Read this first; it names every activity and its type, so on its own it answers most questions about what is in a backup.\n- Participants, their profiles, role assignments and preferences: users.xml. Written only when the backup kept user data, so a backup listed with userdata \"excluded\" has none. When userdata is \"anonymised\" the file is there but the identities in it are substitutes, not the real people.\n- Grades and gradebook structure: gradebook.xml, plus grade_history.xml for past grade changes.\n- Question bank questions: questions.xml.\n- Groups and groupings: groups.xml.\n- Course completion criteria: completion.xml.\n- Badges: badges.xml, written only when badges were included in the backup.\n- Roles: roles.xml. Grading scales: scales.xml. Outcomes: outcomes.xml.\n- The manifest of every file in the backup, with original names, sizes and content hashes: files.xml.\n- One activity's own data: activities/{modname}_{cmid}/, for example activities/book_46/book.xml for a book with cmid 46. That folder also holds module.xml, grades.xml, roles.xml and inforef.xml for the same activity.\n- One section's data: sections/section_{id}/section.xml, where {id} is the section's database id, not the section number shown on the course page.\n- Course settings, enrolment methods, filters and calendar events: the course/ folder, mainly course/course.xml and course/enrolments.xml.\n- The stored files themselves: files/, where each one sits in a subfolder named after the first two characters of its content hash, so content hash 0db641663c2cb9de9621b2dd6ce6cb99a4823e2b is at files/0d/0db641663c2cb9de9621b2dd6ce6cb99a4823e2b. Use files.xml to match a hash to a real name.",
+    "mainfunctions": [
+        "x_core_backup_get_course_backups"
+    ],
+    "otherfunctions": [
+        "extract_files",
+        "read_file"
+    ],
+    "enabled": true
+}

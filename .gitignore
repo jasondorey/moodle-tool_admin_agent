@@ -1,0 +1,10 @@
+.DS_Store
+._*
+Thumbs.db
+node_modules/
+vendor/
+.phpunit.result.cache
+*.log
+.env
+.env.*
+!fixtures/moodle_docs_kb.json

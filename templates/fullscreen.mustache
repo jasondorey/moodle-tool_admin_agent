@@ -1,0 +1,24 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    @template tool_adminagent/fullscreen
+    @copyright 2026 Jason Dorey
+    @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+}}
+<div class="tool-adminagent-fullscreen-host" data-region="fullscreen-host">
+    <p class="text-muted">{{#str}} splitviewtip, tool_adminagent, {{wwwroot}} {{/str}}</p>
+    {{#react}}
+    {
+        "component": "@moodle/lms/tool_adminagent/ChatApp",
+        "props": {
+            "path": {{{pathjson}}},
+            "placementid": {{placementid}},
+            "location": "fullscreen",
+            "firstname": {{{firstnamejson}}},
+            "startlayout": "fullscreen"
+        },
+        "class": "tool-adminagent-react-mount"
+    }
+    <p class="text-muted small">{{#str}} errornojs, tool_adminagent {{/str}}</p>
+    {{/react}}
+</div>

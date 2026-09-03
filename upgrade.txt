@@ -1,0 +1,5 @@
+This file describes API changes in tool_adminagent.
+
+=== 1.0 ===
+* Initial Moodle 5.2+ release.
+* Chat widget is a React/ESM mount (`@moodle/lms/tool_adminagent/ChatApp`). Config admin pages remain Mustache + AMD.

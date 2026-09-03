@@ -1,0 +1,22 @@
+{
+    "formatversion": 2026090200,
+    "shortname": "mod_workshop_management",
+    "name": "Workshop activity management",
+    "description": "Setting up a Workshop activity for peer assessment: creating and configuring the workshop, defining the assessment form its criteria are graded against, preparing example submissions with reference assessments, and moving it through its phases.",
+    "instructions": "Build a workshop in order: create the activity, define its assessment form, add example submissions with their reference assessments if you want them, then move it to the submission phase. Read current state first with x_mod_workshop_pre_update, whose readiness block is the same checklist the workshop page shows the teacher.\n\nThe five phases decide what people can do:\n- setup: only the teacher works here. Students see the activity but can do nothing with it.\n- submission: students hand in their work. Assessing has not started.\n- assessment: students assess the work allocated to them. Allocation itself is done by the teacher in Moodle, not by these tools.\n- evaluation: submitting and assessing are over, and the teacher calculates the final grades on the workshop page. The tools prepare a workshop, they do not run one.\n- closed: everyone sees their grades and the conclusion.\nSwitching does not wait for the current phase to be finished, so read the leftunfinished list in the response and tell the teacher what was skipped. phaseswitchassessment moves a workshop from submission to assessment automatically at the submission deadline, which it needs in order to work.\n\nChoosing a grading strategy by what the teacher wants assessors to do:\n- Give a mark out of something per criterion, added up into a grade: accumulative. This is the usual choice.\n- Comment on each criterion without marking it, so the workshop is purely formative: comments.\n- Work through a checklist of yes or no criteria, where the number of failures maps to a grade: numerrors.\n- Pick one described level per criterion, so everyone grades against the same wording: rubric.\nChanging the strategy later keeps the other form's criteria but stops using them, so the new form has to be written from scratch and any reference assessments have to be given again.\n\nExample submissions are sample work students practise assessing. An example is useless until its reference assessment is set, because what students see afterwards is a comparison of their own practice assessment against it: create the example, then call x_mod_workshop_update_example_assessment. examplesmode decides when students meet them: whenever they like, before they may submit, or before they may assess anyone else. Redefining the assessment form invalidates the reference assessments, so set the form first and the examples after.\n\nWhich text fields take images and files: the activity description, the instructions for submission, the instructions for assessment, the conclusion, every criterion description, an example's content and the overall feedback on an assessment. Plain text only, so an image put there disappears: a rubric level's definition and the per-criterion comments an assessor writes. Files inside an example count against the workshop's nattachments limit, and overall feedback carries files only when overallfeedbackfiles is above 0, so raising those settings is sometimes the first step.\n\nWhat to watch for:\n- Editing the assessment form after students have started assessing changes what they were grading against, and the marks already given no longer line up with it. x_mod_workshop_grading_form_pre_update reports has_assessments.\n- Deleting an example deletes every practice assessment students have made against it.\n- The submission window has to close before the assessment window opens; Moodle refuses an overlap.\n- Two grades come out of a workshop: one for the work submitted and one for the quality of the assessments given. They are separate settings and separate gradebook columns.",
+    "mainfunctions": [
+        "x_mod_workshop_create_modules",
+        "x_mod_workshop_update_module",
+        "x_mod_workshop_pre_update",
+        "x_mod_workshop_update_grading_form",
+        "x_mod_workshop_grading_form_pre_update",
+        "x_mod_workshop_create_examples",
+        "x_mod_workshop_update_example",
+        "x_mod_workshop_delete_example",
+        "x_mod_workshop_update_example_assessment",
+        "x_mod_workshop_example_pre_update",
+        "x_mod_workshop_switch_phase"
+    ],
+    "otherfunctions": [],
+    "enabled": true
+}

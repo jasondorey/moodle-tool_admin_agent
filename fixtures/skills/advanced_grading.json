@@ -1,0 +1,16 @@
+{
+    "formatversion": 2026090200,
+    "shortname": "advanced_grading",
+    "name": "Rubrics and marking guides",
+    "description": "Rubrics and marking guides (advanced grading): create or edit the grading form of an assignment or forum, switch the grading method, and grade students' submissions against the rubric or guide criteria.",
+    "instructions": "Advanced grading replaces the single-number grade with a structured form the grader fills in: a rubric (criteria with levels worth points), a marking guide (criteria scored freely up to a maximum), or another installed method. The active method is a per-activity setting; the form definition belongs to the activity's grading area and survives method switches.\n\nCreating or editing a form: read the full stored state with x_core_grading_definitions_pre_update (every stored form, drafts and inactive methods included), then save with core_grading_save_definitions in one call (it also activates the method; called with cmid and activemethod only it just switches the method, like the UI dropdown).\n\nGrading a submission: get the criterion and level ids with core_grading_get_definitions (works for graders without form management permission), then save with mod_assign_save_grade. To grade many students in one call use mod_assign_save_grades (same record shape).\n\nEdge cases:\n- A definition saved as draft is invisible to graders and the assignment keeps behaving as simple grading until the status becomes ready; the assignment page shows a warning meanwhile.\n- Editing a definition that already has grades leaves the existing grades on the old form until each is regraded; the UI prompts the teacher about regrading.\n- Whole-forum grading (mod_forum, area 'forum') supports selecting a method and defining the form, but no function exists to save filled forms; only assignment submissions can be graded through functions.\n- Read filled forms (who scored what per criterion) with core_grading_get_gradingform_instances; look up another module's grading areas and active method via core_course_get_course_module (advancedgrading field).",
+    "mainfunctions": [
+        "core_grading_save_definitions",
+        "mod_assign_save_grade"
+    ],
+    "otherfunctions": [
+        "core_grading_get_definitions",
+        "x_core_grading_definitions_pre_update"
+    ],
+    "enabled": true
+}

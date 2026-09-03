@@ -1,0 +1,18 @@
+{
+    "formatversion": 2026090200,
+    "shortname": "mod_lesson_management",
+    "name": "Create a lesson",
+    "description": "Building or editing a Moodle Lesson: an activity that guides learners through a branching sequence of content pages and questions, sending them down different paths depending on their answers.",
+    "instructions": "If you are creating a new lesson and the user named the course or section instead of giving ids, resolve them first with core_course_get_courses_by_field and core_course_get_contents.\n\nThe lesson's intro text appears on every page above the content, so keep it short and avoid large images, or leave it empty. If you only wanted a description to show beside the lesson on the course page, create a separate label activity next to the lesson instead.\n\nPrefer 'next' and 'previous' jumps between pages. Jumping to a specific page needs that page's id, which only exists once the page has been created \u2014 so for non-linear navigation, create all the pages first, keep the id each create tool returns, then update the source pages to point their jumps at those ids.\n\nTo change an existing lesson, read its current state with the pre-update tool before editing, and confirm with the user before deleting or restructuring pages that already exist.",
+    "mainfunctions": [
+        "x_mod_lesson_create_modules",
+        "x_mod_lesson_update_module"
+    ],
+    "otherfunctions": [
+        "mod_lesson/*",
+        "core_course_get_courses_by_field",
+        "core_course_get_contents",
+        "x_mod_label_create_modules"
+    ],
+    "enabled": true
+}

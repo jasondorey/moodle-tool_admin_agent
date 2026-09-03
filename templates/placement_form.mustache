@@ -1,0 +1,52 @@
+{{!
+    @template tool_adminagent/placement_form
+    @copyright 2026 Jason Dorey
+    @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+}}
+<div class="mb-2">
+    <label class="form-label" for="placement-name">{{#str}} placementname, tool_adminagent {{/str}}</label>
+    <input class="form-control" id="placement-name" name="name" value="{{name}}">
+</div>
+<div class="mb-2">
+    <label class="form-label" for="placement-urlmasks">{{#str}} urlmasks, tool_adminagent {{/str}}</label>
+    <textarea class="form-control" id="placement-urlmasks" name="urlmasks">{{urlmasks}}</textarea>
+</div>
+<div class="mb-2">
+    <span class="form-label">{{#str}} buttonlocation, tool_adminagent {{/str}}</span>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="location" id="loc-h1" value="h1" {{#loch1}}checked{{/loch1}}>
+        <label class="form-check-label" for="loc-h1">{{#str}} locationh1, tool_adminagent {{/str}}</label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="location" id="loc-h2" value="h2" {{#loch2}}checked{{/loch2}}>
+        <label class="form-check-label" for="loc-h2">{{#str}} locationh2, tool_adminagent {{/str}}</label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="location" id="loc-usermenu" value="usermenu" {{#locusermenu}}checked{{/locusermenu}}>
+        <label class="form-check-label" for="loc-usermenu">{{#str}} locationusermenu, tool_adminagent {{/str}}</label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="location" id="loc-floating" value="floating" {{#locfloating}}checked{{/locfloating}}>
+        <label class="form-check-label" for="loc-floating">{{#str}} locationfloating, tool_adminagent {{/str}}</label>
+    </div>
+</div>
+<div class="mb-2">
+    <span class="form-label">{{#str}} initialskills, tool_adminagent {{/str}}</span>
+    {{#skills}}
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="skillids" id="pskill-{{id}}" value="{{id}}" {{#checked}}checked{{/checked}}>
+        <label class="form-check-label" for="pskill-{{id}}">{{name}}</label>
+    </div>
+    {{/skills}}
+    {{^skills}}
+    <p class="text-muted">{{#str}} noselection, tool_adminagent {{/str}}</p>
+    {{/skills}}
+</div>
+<div class="mb-2">
+    <label class="form-label" for="placement-welcome">{{#str}} customwelcome, tool_adminagent {{/str}}</label>
+    <textarea class="form-control" id="placement-welcome" name="welcome">{{welcome}}</textarea>
+</div>
+<div class="form-check form-switch">
+    <input type="checkbox" class="form-check-input" name="enabled" {{#enabledchecked}}checked{{/enabledchecked}}>
+    <label class="form-check-label">{{#str}} enabled, tool_adminagent {{/str}}</label>
+</div>
